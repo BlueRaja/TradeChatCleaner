@@ -140,6 +140,14 @@ Whitelist.bg:SetPoint("TOPLEFT", Whitelist.label, "BOTTOMLEFT", -4, 0)
 Whitelist.bg:SetPoint("TOPRIGHT", Whitelist.label, "BOTTOMRIGHT", 4, 0)
 Whitelist.bg:SetPoint("BOTTOMRIGHT", Options, -16, 16 + 4 + 20)
 
+local CheckboxWhitelistChannels = CreateFrame("CheckButton", "$parentCheckboxWhitelistChannels", Options, "ChatConfigCheckButtonTemplate")
+CheckboxWhitelistChannels:SetScript("OnClick", function(this)
+	WhitelistAllNumberedChannels = CheckboxWhitelistChannels:GetChecked()
+end)
+_G[CheckboxWhitelistChannels:GetName().."Text"]:SetText(L.CheckboxWhitelistChannelsLabel)
+CheckboxWhitelistChannels.tooltip = L.CheckboxWhitelistChannelsTooltip
+CheckboxWhitelistChannels:SetPoint("TOPLEFT", 316, -88)
+
 local function RefreshEditBoxFromList(editBoxName, listName)
 	editBoxName:SetCursorPosition(0)
 	editBoxName:ClearFocus()
@@ -176,6 +184,8 @@ function Options:refresh()
 
 	table.sort(ChatCleanerWhitelist)
 	RefreshWhitelist()
+	
+	CheckboxWhitelistChannels:SetChecked(WhitelistAllNumberedChannels)
 end
 
 Options:SetScript("OnShow", Options.refresh)
